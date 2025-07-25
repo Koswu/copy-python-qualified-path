@@ -1,0 +1,42 @@
+{
+  "name": "copy-python-qualified-path",
+  "displayName": "Copy Python Qualified Path",
+  "description": "Adds right-click option to copy full Python qualified path like module.Class.method",
+  "version": "0.0.1",
+  "publisher": "kdrkrgz",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.copyQualifiedPath",
+        "title": "Copy Qualified Path"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.copyQualifiedPath",
+          "when": "resourceLangId == python",
+          "group": "copy"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0",
+    "vscode": "^1.102.0"
+  }
+}
