@@ -45,12 +45,19 @@ export function activate(context: vscode.ExtensionContext) {
 
         // Try to detect enclosing class if only method is selected
         if (methodMatch && !classMatch) {
-            for (let i = selection.active.line; i >= 0; i--) {
+            // Get the indentation level of the current function
+            const currentIndent = line.search(/\S/);
+            
+            for (let i = selection.active.line - 1; i >= 0; i--) {
                 const l = document.lineAt(i).text;
                 const match = l.match(/class (\w+)/);
                 if (match) {
-                    className = match[1];
-                    break;
+                    // Check if the class is at a lower indentation level than the function
+                    const classIndent = l.search(/\S/);
+                    if (classIndent < currentIndent) {
+                        className = match[1];
+                        break;
+                    }
                 }
             }
         }
