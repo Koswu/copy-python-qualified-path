@@ -61,7 +61,7 @@ code --install-extension copy-python-qualified-path-0.0.1.vsix
 
 - Determines the Python module path by resolving the file's location relative to the project root (`.git`, `.vscode`, `pyproject.toml`, etc.).
 - Parses the current line to extract class or method definitions.
-- If only a method is selected, attempts to find the enclosing class upward in the file.
+- If only a method is selected, attempts to find the enclosing class upward in the file by checking indentation levels to ensure the function is actually inside the class.
 
 ---
 
