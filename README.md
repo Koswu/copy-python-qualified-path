@@ -90,6 +90,26 @@ A: It walks up the directory tree looking for `.git`, `.vscode`, or `pyproject.t
 
 ---
 
+## 🚢 Release Process
+
+This extension uses GitHub Actions for automated releases. When a new version tag is pushed, the CI will automatically:
+
+1. Build the extension
+2. Package it into a `.vsix` file
+3. Create a GitHub Release with the packaged file
+
+### Creating a Release
+
+```bash
+# Update version in package.json, then:
+git tag v0.0.2
+git push origin v0.0.2
+```
+
+The release will be available at: [GitHub Releases](https://github.com/Koswu/copy-python-qualified-path/releases)
+
+---
+
 ## 🧑‍💻 Author
 
 Made with ❤️ by [@kdrkrgz](https://github.com/kdrkrgz)
