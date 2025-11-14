@@ -23,6 +23,7 @@ src.utils.mymodule.MyClass.get_numbers
 ## ✨ Features
 
 - ✅ Adds `Copy Qualified Path` to the right-click context menu.
+- ✅ Adds `Copy Import Statement` to the right-click context menu.
 - ✅ Automatically detects the Python module path based on your project structure.
 - ✅ Works with both classes and functions.
 - ✅ Detects the enclosing class of a method automatically.
@@ -47,6 +48,8 @@ code --install-extension copy-python-qualified-path-0.0.1.vsix
 
 ## 🚀 Usage
 
+### Copy Qualified Path
+
 1. Open any `.py` file in your project.
 2. Right-click on a class or method name.
 3. Select `Copy Qualified Path`.
@@ -54,6 +57,19 @@ code --install-extension copy-python-qualified-path-0.0.1.vsix
    ```
    your.module.path.ClassName.method_name
    ```
+
+### Copy Import Statement
+
+1. Open any `.py` file in your project.
+2. Right-click on a class or function name.
+3. Select `Copy Import Statement`.
+4. The import statement will be copied in the format:
+   ```python
+   from your.module.path import ClassName
+   # or
+   from your.module.path import function_name
+   ```
+   Note: When clicking on a method inside a class, it will generate an import for the class, not the method.
 
 ---
 
@@ -67,10 +83,20 @@ code --install-extension copy-python-qualified-path-0.0.1.vsix
 
 ## 🧪 Example Output
 
+### Copy Qualified Path
+
 | File Path                          | Selection      | Copied Path                             |
 |-----------------------------------|----------------|------------------------------------------|
 | `project/api/user/views.py`       | `UserView.get` | `project.api.user.views.UserView.get`    |
 | `core/database/init.py`           | `setup_db()`   | `core.database.init.setup_db`            |
+
+### Copy Import Statement
+
+| File Path                          | Selection           | Copied Import                                 |
+|-----------------------------------|---------------------|-----------------------------------------------|
+| `project/api/user/views.py`       | `class UserView`    | `from project.api.user.views import UserView` |
+| `project/api/user/views.py`       | `def get(self)`     | `from project.api.user.views import UserView` |
+| `core/database/init.py`           | `def setup_db()`    | `from core.database.init import setup_db`     |
 
 ---
 
