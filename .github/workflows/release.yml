@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
       
       - name: Install dependencies
@@ -32,7 +32,7 @@ jobs:
         run: npm install -g @vscode/vsce
       
       - name: Package extension
-        run: vsce package --allow-missing-repository -y
+        run: vsce package --allow-missing-repository --skip-license
       
       - name: Get version from tag
         id: get_version
