@@ -41,7 +41,7 @@ src.utils.mymodule.MyClass.get_numbers
 ### Local `.vsix` file
 
 ```bash
-code --install-extension copy-python-qualified-path-0.0.1.vsix
+code --install-extension copy-python-qualified-path-0.5.0.vsix
 ```
 
 ---

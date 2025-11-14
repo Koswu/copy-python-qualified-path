@@ -2,7 +2,7 @@
   "name": "copy-python-qualified-path",
   "displayName": "Copy Python Qualified Path",
   "description": "Adds right-click option to copy full Python qualified path like module.Class.method",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "publisher": "kdrkrgz",
   "engines": {
     "vscode": "^1.1.37"

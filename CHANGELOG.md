@@ -6,6 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-11-14
+
 ### Added
 - New "Copy Import Statement" command that copies Python import statements in the format `from module.path import ClassName` or `from module.path import function_name`
 - Context menu item for "Copy Import Statement" alongside existing "Copy Qualified Path"
