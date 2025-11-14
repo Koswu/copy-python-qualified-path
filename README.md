@@ -85,7 +85,7 @@ code --install-extension copy-python-qualified-path-0.5.0.vsix
 
 - Determines the Python module path by resolving the file's location relative to the project root (`.git`, `.vscode`, `pyproject.toml`, etc.).
 - Parses the current line to extract class, method, function, or constant definitions.
-- Supports type-annotated constants (e.g., `MY_VAR: int = 42`).
+- Supports type-annotated constants with simple (single-word) types (e.g., `MY_VAR: int = 42`). Complex type annotations (e.g., `config: Dict[str, Any] = {}`) are not currently supported.
 - If only a method is selected, attempts to find the enclosing class upward in the file by checking indentation levels to ensure the function is actually inside the class.
 - Falls back to `import *` when unable to determine what specific element to import.
 
