@@ -36,6 +36,6 @@ def outer_function():
     """This should be: module.outer_function"""
     def inner_function():
         """Inner functions are not typically copied, but if they are,
-        this should be: module.outer_function (not with a class name)"""
+        this should be: module.outer_function.inner_function (not with a class name)"""
         pass
     return inner_function

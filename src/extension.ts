@@ -54,7 +54,11 @@ export function activate(context: vscode.ExtensionContext) {
                 if (match) {
                     // Check if the class is at a lower indentation level than the function
                     const classIndent = l.search(/\S/);
-                    if (classIndent < currentIndent) {
+                    // Check if the function is indented exactly one level deeper than the class (4 spaces or 1 tab)
+                    if (
+                        (currentIndent === classIndent + 4) ||
+                        (l[classIndent] === '\t' && currentIndent === classIndent + 1)
+                    ) {
                         className = match[1];
                         break;
                     }
