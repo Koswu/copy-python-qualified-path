@@ -33,4 +33,3 @@ class TestClass:
 import os
 
 # Edge Case 11: From import statement - should fall back to import *
-from typing import List
