@@ -51,3 +51,12 @@ settings = {
 }
 # Expected qualified path: test_constants.settings
 # Expected import: from test_constants import settings
+
+# Test Case 7: Type-annotated constants
+max_connections: int = 100
+# Expected qualified path: test_constants.max_connections
+# Expected import: from test_constants import max_connections
+
+api_timeout: float = 30.5
+# Expected qualified path: test_constants.api_timeout
+# Expected import: from test_constants import api_timeout

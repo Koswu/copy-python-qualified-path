@@ -31,8 +31,8 @@ function parsePythonElement(document: vscode.TextDocument, selection: vscode.Sel
     const classMatch = line.match(/class (\w+)/);
     const methodMatch = line.match(/def (\w+)/);
     // Match top-level constants: variable assignments at the beginning of the line (no indentation)
-    // Match patterns like: CONSTANT = value, MY_VAR = value, etc.
-    const constantMatch = line.match(/^(\w+)\s*=/);
+    // Match patterns like: CONSTANT = value, MY_VAR = value, typed_var: int = value
+    const constantMatch = line.match(/^(\w+)(?:\s*:\s*\w+)?\s*=/);
 
     let className = '';
     let methodName = '';
