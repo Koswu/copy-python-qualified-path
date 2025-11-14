@@ -25,8 +25,9 @@ src.utils.mymodule.MyClass.get_numbers
 - ✅ Adds `Copy Qualified Path` to the right-click context menu.
 - ✅ Adds `Copy Import Statement` to the right-click context menu.
 - ✅ Automatically detects the Python module path based on your project structure.
-- ✅ Works with both classes and functions.
+- ✅ Works with classes, functions, and top-level constants/variables.
 - ✅ Detects the enclosing class of a method automatically.
+- ✅ Falls back to `from module import *` when unable to determine specific element.
 
 ---
 
@@ -61,23 +62,32 @@ code --install-extension copy-python-qualified-path-0.5.0.vsix
 ### Copy Import Statement
 
 1. Open any `.py` file in your project.
-2. Right-click on a class or function name.
+2. Right-click on a class, function, or constant name.
 3. Select `Copy Import Statement`.
 4. The import statement will be copied in the format:
    ```python
    from your.module.path import ClassName
    # or
    from your.module.path import function_name
+   # or
+   from your.module.path import MY_CONSTANT
+   # or (when unable to determine specific element)
+   from your.module.path import *
    ```
-   Note: When clicking on a method inside a class, it will generate an import for the class, not the method.
+   Note: 
+   - When clicking on a method inside a class, it will generate an import for the class, not the method.
+   - When clicking on a top-level constant or variable, it will generate an import for that constant.
+   - When clicking on a blank line or unrecognized pattern, it will fall back to `import *`.
 
 ---
 
 ## ⚙️ How It Works
 
 - Determines the Python module path by resolving the file's location relative to the project root (`.git`, `.vscode`, `pyproject.toml`, etc.).
-- Parses the current line to extract class or method definitions.
+- Parses the current line to extract class, method, function, or constant definitions.
+- Supports type-annotated constants (e.g., `MY_VAR: int = 42`).
 - If only a method is selected, attempts to find the enclosing class upward in the file by checking indentation levels to ensure the function is actually inside the class.
+- Falls back to `import *` when unable to determine what specific element to import.
 
 ---
 
@@ -89,6 +99,7 @@ code --install-extension copy-python-qualified-path-0.5.0.vsix
 |-----------------------------------|----------------|------------------------------------------|
 | `project/api/user/views.py`       | `UserView.get` | `project.api.user.views.UserView.get`    |
 | `core/database/init.py`           | `setup_db()`   | `core.database.init.setup_db`            |
+| `config/settings.py`              | `API_KEY = "x"`| `config.settings.API_KEY`                |
 
 ### Copy Import Statement
 
@@ -97,6 +108,8 @@ code --install-extension copy-python-qualified-path-0.5.0.vsix
 | `project/api/user/views.py`       | `class UserView`    | `from project.api.user.views import UserView` |
 | `project/api/user/views.py`       | `def get(self)`     | `from project.api.user.views import UserView` |
 | `core/database/init.py`           | `def setup_db()`    | `from core.database.init import setup_db`     |
+| `config/settings.py`              | `API_KEY = "x"`     | `from config.settings import API_KEY`         |
+| `config/settings.py`              | `# comment line`    | `from config.settings import *`               |
 
 ---
 
