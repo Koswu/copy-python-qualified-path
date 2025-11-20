@@ -8,6 +8,7 @@ import * as fs from 'fs';
 interface ParsedPythonElement {
     className: string;
     methodName: string;
+    constantName: string;
     modulePath: string;
 }
 
@@ -29,12 +30,17 @@ function parsePythonElement(document: vscode.TextDocument, selection: vscode.Sel
 
     const classMatch = line.match(/class (\w+)/);
     const methodMatch = line.match(/def (\w+)/);
+    // Match top-level constants: variable assignments at the beginning of the line (no indentation)
+    // Match patterns like: CONSTANT = value, MY_VAR = value, typed_var: int = value
+    const constantMatch = line.match(/^(\w+)(?:\s*:\s*[^=]+)?\s*=/);
 
     let className = '';
     let methodName = '';
+    let constantName = '';
 
     if (classMatch) className = classMatch[1];
     if (methodMatch) methodName = methodMatch[1];
+    if (constantMatch) constantName = constantMatch[1];
 
     // Try to detect enclosing class if only method is selected
     if (methodMatch && !classMatch) {
@@ -65,7 +71,7 @@ function parsePythonElement(document: vscode.TextDocument, selection: vscode.Sel
         .replace(/\.py$/, '')
         .replace(/[\/\\]/g, '.');
 
-    return { className, methodName, modulePath };
+    return { className, methodName, constantName, modulePath };
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -86,11 +92,12 @@ export function activate(context: vscode.ExtensionContext) {
         
         if (!parsed) return;
 
-        const { className, methodName, modulePath } = parsed;
+        const { className, methodName, constantName, modulePath } = parsed;
 
         let qualifiedPath = modulePath;
         if (className) qualifiedPath += `.${className}`;
         if (methodName) qualifiedPath += `.${methodName}`;
+        if (constantName && !className && !methodName) qualifiedPath += `.${constantName}`;
 
         await vscode.env.clipboard.writeText(qualifiedPath);
         vscode.window.showInformationMessage(`Copied: ${qualifiedPath}`);
@@ -113,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
         
         if (!parsed) return;
 
-        const { className, methodName, modulePath } = parsed;
+        const { className, methodName, constantName, modulePath } = parsed;
 
         let importStatement = '';
         
@@ -127,9 +134,12 @@ export function activate(context: vscode.ExtensionContext) {
         } else if (methodName) {
             // If on a top-level function line, import the function
             importStatement = `from ${modulePath} import ${methodName}`;
+        } else if (constantName) {
+            // If on a constant line, import the constant
+            importStatement = `from ${modulePath} import ${constantName}`;
         } else {
-            vscode.window.showInformationMessage("Could not determine what to import.");
-            return;
+            // If we can't determine what to import, use import *
+            importStatement = `from ${modulePath} import *`;
         }
 
         await vscode.env.clipboard.writeText(importStatement);
