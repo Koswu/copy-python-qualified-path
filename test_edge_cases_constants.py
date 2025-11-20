@@ -30,6 +30,5 @@ class TestClass:
 # Edge Case 9: Empty line - should fall back to import *
 
 # Edge Case 10: Import statement - should fall back to import *
-import os
 
 # Edge Case 11: From import statement - should fall back to import *
